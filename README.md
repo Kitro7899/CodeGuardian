@@ -42,8 +42,8 @@ PRIMARY KEY (id)
 ```bash
 spring.datasource.url=jdbc:mysql://127.0.0.1:3306/codeguardian
 spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
-spring.datasource.username=root
-spring.datasource.password=0000
+spring.datasource.username=your_name <------------(имя)
+spring.datasource.password=password  <------------(пароль)
 spring.jpa.hibernate.ddl-auto=update
 ```
 
