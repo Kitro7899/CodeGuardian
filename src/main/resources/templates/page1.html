@@ -4,49 +4,221 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Web Assistant for Programmers</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap&subset=cyrillic">
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Roboto', Arial, sans-serif;
             margin: 0;
-            padding: 20px;
-            background-color: #121111;
-        }
-        header {
-            text-align: center;
-            margin-bottom: 20px;
-
-        }
-        .task-form, .session-controls, .statistics {
-            margin-bottom: 20px;
-        }
-        .task-list {
-            list-style: none;
             padding: 0;
+            background-color: #0E0E0E;
+            display: flex;
+            justify-content: center; /* Center horizontally */
+            align-items: center; /* Center vertically */
+            height: 100vh; /* Full viewport height */
         }
-       .h1 {
-           color: #9e9999;
-       }
-       .welcome{
-           background-color: #2C2C2D;
-       }
-       .nav{
-           color: #BD3A41
-       }
 
+        /* Frame 3 */
+        #frame3 {
+            position: relative;
+            width: 1588px;
+            height: 1056px;
+            background: #0E0E0E;
+        }
+
+        /* Rectangle 6 */
+        #rectangle6 {
+            position: absolute;
+            width: 1456px;
+            height: 902px;
+            left: 58px;
+            top: 74px;
+            background: #1A1A1A;
+            border-radius: 49px;
+        }
+
+        /* Component 3 */
+        #component3 {
+            position: absolute;
+            width: 258px;
+            height: 77px;
+            left: 114px;
+            top: 648px;
+        }
+
+        /* Component 2 */
+        #component2 {
+            position: absolute;
+            width: 223px;
+            height: 77px;
+            left: 132px;
+            top: 570px;
+            filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+        }
+
+        /* Rectangle 8 */
+        #registrationButton {
+            position: absolute;
+            left: 0%;
+            right: 0%;
+            top: 0%;
+            bottom: 0%;
+            background: rgba(49, 49, 49, 0.22);
+            border-radius: 37px;
+        }
+
+        /* Регистрация */
+        #registration {
+            position: absolute;
+            left: 12.11%;
+            right: 11.21%;
+            top: 22.08%;
+            bottom: 24.68%;
+            font-family: 'Roboto';
+            font-style: normal;
+            font-weight: 400;
+            font-size: 24px;
+            line-height: 45px;
+            display: flex;
+            align-items: center;
+            text-align: center;
+            color: #FFFFFF;
+        }
+
+        /* Component 4 */
+        #component4 {
+            position: absolute;
+            width: 197px;
+            height: 46px;
+            left: 1370px;
+            top: 900px;
+        }
+
+        /* Rectangle 10 */
+        #loginButton {
+            position: absolute;
+            left: 0%;
+            right: 40%;
+            top: 10%;
+            bottom: 10%;
+            background: rgba(70, 69, 69, 0.22);
+            border-radius: 37px;
+        }
+
+        /* Войти */
+        #login {
+            position: absolute;
+            left: 10.6%;
+            right: 80.22%;
+            top: 2%;
+            bottom: 10%;
+            font-family: 'Roboto';
+            font-style: normal;
+            font-weight: 400;
+            font-size: 24px;
+            line-height: 45px;
+            display: flex;
+            align-items: center;
+            text-align: center;
+            color: #FFFFFF;
+        }
+
+        /* Component 5 */
+        #component5 {
+            position: absolute;
+            width: 1338px;
+            height: 472px;
+            left: 114px;
+            top: 114px;
+        }
+
+        /* Добро пожаловать в CodeGuardian */
+        #welcomeMessage {
+            position: absolute;
+            left: 1.94%;
+            right: 37.44%;
+            top: 0%;
+            bottom: 74.79%;
+            font-family: 'Roboto';
+            font-style: normal;
+            font-weight: 400;
+            font-size: 36px;
+            line-height: 67px;
+            display: flex;
+            align-items: center;
+            color: #989898;
+        }
+
+        /* Оптимизируй свою работу с кодом */
+        #optimizeWork {
+            position: absolute;
+            left: 1.35%;
+            right: 3.96%;
+            top: 25.21%;
+            bottom: 0%;
+            font-family: 'Roboto';
+            font-style: normal;
+            font-weight: 400;
+            font-size: 32px;
+            line-height: 60px;
+            display: flex;
+            align-items: center;
+            color: #D8D8D8;
+        }
+
+        /* Rectangle 11 */
+        #rectangle11 {
+            position: absolute;
+            left: 0%;
+            right: 0%;
+            top: 19.92%;
+            bottom: 76.91%;
+            background: rgba(217, 217, 217, 0.24);
+            border-radius: 29px;
+        }
+
+        /* Кнопка стили */
+        #registrationButton button, #loginButton button {
+            width: 100%;
+            height: 100%;
+            border: none;
+            background: none;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .link {
+            color: #5f5e5e;
+            font-weight: 400;
+            font-size: 24px;
+            line-height: 60px;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        .signin {
+            font-size: 14px;
+            line-height: 0;
+        }
     </style>
 </head>
 <body>
-<div class="welcome">
-<header>
-    <h1 class="h1">Добро пожаловать в CodeGuardian!</h1>
-</header>
-
-<nav class="nav">
-    <a href="/test/welcome">Home</a>
-    <a href="/test/registration">Register</a>
-    <a href="/test/logout">Logout</a>
-    <a href="/test/users">Sign in</a>
-</nav>
+<div id="frame3">
+    <div id="rectangle6"></div>
+    <div id="component3">
+        <div id="rectangle8-component3"></div>
+        <a href="/test/registration" class="link">Зарегистрироваться</a>
+    </div>
+    <div id="component2"></div>
+    <div id="component4">
+        <div id="rectangle10-component4"></div>
+        <a href="/test/users" class="link">Войти</a>
+    </div>
+    <div id="component5">
+        <div id="welcomeMessage">Добро пожаловать в CodeGuardian</div>
+        <div id="optimizeWork">Оптимизируй свою работу с кодом: настрой статистику времени, получай уведомления о перерывах и отдыхе. Преврати свой процесс разработки в искусство эффективности и равновесия!</div>
+        <div id="rectangle11"></div>
+    </div>
 </div>
 </body>
 </html>

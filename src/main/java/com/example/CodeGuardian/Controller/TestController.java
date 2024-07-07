@@ -1,17 +1,12 @@
 package com.example.CodeGuardian.Controller;
 
-import ch.qos.logback.core.model.Model;
 import com.example.CodeGuardian.Config.MyUserDetailsService;
-import com.example.CodeGuardian.Entity.User;
 import com.example.CodeGuardian.repository.UserRepo;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-
-
-import java.util.List;
 
 @Controller
 @RequestMapping("test/")
@@ -52,14 +47,19 @@ public class TestController {
         return "registration";
     }
     @PostMapping("/register")
-    public String registerUser(@RequestParam String username, @RequestParam String password) {
-        userService.registerNewUser(username, password);
+    public String registerUser(@RequestParam String username, @RequestParam String password, @RequestParam String email) {
+        userService.registerNewUser(username, password, email);
         return "redirect:/test/users"; // Перенаправление на приветственную страницу после успешной регистрации
     }
     @GetMapping("/logout")
     public String logout() {
         return "redirect:/test/logout";
     }
+
+
+
+
+
 
 
 

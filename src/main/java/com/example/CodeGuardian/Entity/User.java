@@ -13,6 +13,7 @@ public class User {
 
     @Column(unique = true)
     private String name;
+    private String email;
     private String password;
     private String role;
 }

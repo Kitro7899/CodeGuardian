@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dynamic Labels Example</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    h1 {
+      text-align: center;
+    }
+    .label-container {
+      margin-top: 20px;
+    }
+    .label {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px;
+      border: 1px solid #ccc;
+      margin-bottom: 10px;
+    }
+    .label-name {
+      flex-grow: 1;
+      margin-right: 10px;
+    }
+    .delete-button {
+      background-color: #f44336;
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 14px;
+      margin-left: 10px;
+      cursor: pointer;
+      border-radius: 4px;
+    }
+    .delete-button:hover {
+      background-color: #cc0000;
+    }
+    .add-button {
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 16px;
+      margin-bottom: 10px;
+      cursor: pointer;
+      border-radius: 4px;
+      display: block;
+      margin: 20px auto;
+    }
+    .add-button:hover {
+      background-color: #45a049;
+    }
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0,0,0,0.4);
+    }
+    .modal-content {
+      background-color: #fefefe;
+      margin: 15% auto;
+      padding: 20px;
+      border: 1px solid #888;
+      width: 80%;
+    }
+    .close {
+      color: #aaa;
+      float: right;
+      font-size: 28px;
+      font-weight: bold;
+    }
+    .close:hover,
+    .close:focus {
+      color: black;
+      text-decoration: none;
+      cursor: pointer;
+    }
+    .input-label {
+      margin-bottom: 10px;
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <h1>Dynamic Labels Example</h1>
+  <div class="label-container" id="label-container">
+    <!-- Labels will be dynamically added here -->
+  </div>
+  <button class="add-button" id="add-label-button">Add Label</button>
+  <!-- Modal for adding label -->
+  <div id="labelModal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <div class="input-label">
+        <label for="labelName">Label Name:</label>
+        <input type="text" id="labelName" name="labelName" required>
+      </div>
+      <button id="saveLabelButton">Save Label</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  $(document).ready(function() {
+    // Display modal when Add Label button is clicked
+    $('#add-label-button').click(function() {
+      $('#labelModal').css('display', 'block');
+    });
+
+    // Close the modal when the close button or outside the modal is clicked
+    $('.close, .modal').click(function() {
+      $('#labelModal').css('display', 'none');
+    });
+
+    // Prevent modal from closing when clicking inside the modal content
+    $('.modal-content').click(function(event) {
+      event.stopPropagation();
+    });
+
+    // Add Label button handler
+    $('#saveLabelButton').click(function() {
+      let labelName = $('#labelName').val().trim();
+      if (labelName) {
+        // AJAX call to save label
+        $.ajax({
+          url: '/test/labels',
+          type: 'POST',
+          contentType: 'application/json',
+          data: JSON.stringify({ name: labelName }),
+          success: function(data) {
+            addLabelToDOM(data);
+            $('#labelModal').css('display', 'none');
+            $('#labelName').val('');
+          }
+        });
+      } else {
+        alert('Label name cannot be empty!');
+      }
+    });
+
+    // Function to dynamically add a label to the DOM
+    function addLabelToDOM(label) {
+      let labelHtml = `
+                <div class="label" id="label-${label.id}">
+                    <span class="label-name">${label.name}</span>
+                    <button class="delete-button" onclick="deleteLabel(${label.id})">Delete</button>
+                </div>
+            `;
+      $('#label-container').append(labelHtml);
+    }
+
+    // Function to delete label
+    window.deleteLabel = function(labelId) {
+      if (confirm('Are you sure you want to delete this label?')) {
+        $.ajax({
+          url: '/test/labels/' + labelId,
+          type: 'DELETE',
+          success: function() {
+            $('#label-' + labelId).remove();
+          }
+        });
+      }
+    };
+
+    // Load existing labels on page load
+    $.ajax({
+      url: '/test/labels',
+      type: 'GET',
+      success: function(data) {
+        data.forEach(function(label) {
+          addLabelToDOM(label);
+        });
+      }
+    });
+  });
+</script>
+
+</body>
+</html>

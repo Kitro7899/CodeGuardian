@@ -28,9 +28,10 @@ public class MyUserDetailsService implements UserDetailsService {
         return user.map(MyUserDetails::new)
                 .orElseThrow(()->new UsernameNotFoundException(username+"There is not such user in REPO"));
     }
-    public void registerNewUser(String username, String password) {
+    public void registerNewUser(String username, String password, String email) {
         User newUser = new User();
         newUser.setName(username);
+        newUser.setEmail(email);
         newUser.setPassword(passwordEncoder.encode(password));
         newUser.setRole("ROLE_USER");
         userRepo.save(newUser);

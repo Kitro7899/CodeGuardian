@@ -3,14 +3,81 @@
 <head>
   <meta charset="UTF-8">
   <title>Registration</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap&subset=cyrillic">
+
+  <style>
+    /* CSS стили для формы регистрации */
+    body {
+      font-family: 'Roboto', sans-serif;
+      background: #313131;
+      color: #E3E3E3;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    form {
+      width: 400px;
+      background: #1b1b1b88;
+      padding: 20px;
+      border-radius: 5px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    h2 {
+      text-align: center;
+      font-size: 32px;
+      line-height: 1.5;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 10px;
+      font-size: 20px;
+    }
+
+    input[type="text"],
+    input[type="password"] {
+      width: 95%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border: 1px solid rgba(183, 183, 183, 0.35);
+      border-radius: 12px;
+      background: rgba(117, 117, 117, 0.13);
+      color: rgba(255, 255, 255, 0.8);
+      font-size: 16px;
+    }
+
+    button[type="submit"] {
+      width: 100%;
+      padding: 10px;
+      border: none;
+      border-radius: 12px;
+      background-color: #737373;
+      color: #FFFFFF;
+      font-size: 20px;
+      cursor: pointer;
+    }
+
+    button[type="submit"]:hover {
+      background-color: #595959;
+    }
+  </style>
 </head>
 <body>
-<h2>Registration</h2>
 <form action="/test/register" method="post">
+  <h2>Registration</h2>
   <label for="username">Username:</label><br>
   <input type="text" id="username" name="username" required><br>
+
+  <label for="email">Email:</label><br>
+  <input type="text" id="email" name="email" required><br>
+
   <label for="password">Password:</label><br>
   <input type="password" id="password" name="password" required><br>
+
   <button type="submit">Register</button>
 </form>
 </body>
