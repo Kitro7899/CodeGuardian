@@ -1,12 +1,17 @@
 package com.example.CodeGuardian.Controller;
 
 import com.example.CodeGuardian.Config.MyUserDetailsService;
+import com.example.CodeGuardian.Entity.task;
+
 import com.example.CodeGuardian.repository.UserRepo;
+import com.example.CodeGuardian.repository.taskRepo;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
 
 @Controller
 @RequestMapping("test/")
@@ -14,6 +19,9 @@ import org.springframework.web.bind.annotation.*;
 public class TestController {
     @Autowired
     private UserRepo userRepo;
+
+    @Autowired
+    private taskRepo TaskRepo;
 
     @Autowired
     private MyUserDetailsService userService;
@@ -62,6 +70,25 @@ public class TestController {
 
 
 
+    @GetMapping("/tasks")
+    public String getTasks(Map<String, Object> model) {
+        Iterable<task> tasks = TaskRepo.findAll();
+        model.put("tasks", tasks);
+        return "page2";
+    }
 
+    @PostMapping("/addTask")
+    @PreAuthorize("hasAuthority('ROLE_USER')")
+    public String addTask(@RequestParam String text) {
+        task taskText = new task(text);
+        TaskRepo.save(taskText);
+        return "redirect:/test/tasks";
+    }
 
+    @PostMapping("/deleteTask")
+    @PreAuthorize("hasAuthority('ROLE_USER')")
+    public String deleteTask(@RequestParam Long id) {
+        TaskRepo.deleteById(id);
+        return "redirect:/test/tasks";
+    }
 }

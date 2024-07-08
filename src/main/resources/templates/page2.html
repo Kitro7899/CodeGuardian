@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -43,87 +43,29 @@
 <header>
     <h1>Web Assistant for Programmers</h1>
 </header>
-
+<p>Привет, <span th:text="${#authentication.name}">Имя пользователя</span>!</p>
 <nav>
     <a href="/test/welcome">Home</a>
     <a href="/test/registration">Register</a>
-    <a href="/test/logout">Logout</a> <!-- Ссылка для выхода -->
+    <a href="/test/logout">Logout</a>
 </nav>
 
-<div class="task-form">
-    <h2>Create a Task</h2>
-    <form id="task-form">
-        <input type="text" id="task-name" placeholder="Task name" required>
-        <button type="submit">Add Task</button>
+<h1>Task List</h1>
+<div>
+    <form action="/test/addTask" method="post">
+        <input type="text" name="text" placeholder="Введите текст" />
+        <button type="submit">Добавить</button>
     </form>
 </div>
-
-<div class="task-list-container">
-    <h2>Tasks</h2>
-    <ul id="task-list" class="task-list"></ul>
-</div>
-
-<div class="session-controls">
-    <h2>Session Timer</h2>
-    <div class="timer" id="timer">00:00:00</div>
-    <div class="buttons">
-        <button id="start-session">Start Session</button>
-        <button id="end-session">End Session</button>
+<div th:each="task : ${tasks}">
+    <div>
+        <d th:text="${task.id}"></d>
+        <span th:text="${task.text}"></span>
+        <form action="/test/deleteTask" method="post" style="display:inline;">
+            <input type="hidden" name="id" th:value="${task.id}" />
+            <button type="submit">Удалить</button>
+        </form>
     </div>
 </div>
-
-<div class="statistics">
-    <h2>Statistics</h2>
-    <div id="statistics-content">
-        <!-- Placeholder for statistics content -->
-    </div>
-</div>
-
-<script>
-    // Timer
-    let timerInterval;
-    let startTime;
-
-    document.getElementById('start-session').addEventListener('click', () => {
-        startTime = new Date();
-        timerInterval = setInterval(updateTimer, 1000);
-    });
-
-    document.getElementById('end-session').addEventListener('click', () => {
-        clearInterval(timerInterval);
-        alert('Session ended. Don\'t forget to take a break!');
-        // You can also send data to the server or save in local storage here
-    });
-
-    function updateTimer() {
-        const now = new Date();
-        const elapsedTime = Math.floor((now - startTime) / 1000);
-        const hours = String(Math.floor(elapsedTime / 3600)).padStart(2, '0');
-        const minutes = String(Math.floor((elapsedTime % 3600) / 60)).padStart(2, '0');
-        const seconds = String(elapsedTime % 60).padStart(2, '0');
-        document.getElementById('timer').textContent = `${hours}:${minutes}:${seconds}`;
-    }
-
-    // Task Management
-    document.getElementById('task-form').addEventListener('submit', (e) => {
-        e.preventDefault();
-        const taskName = document.getElementById('task-name').value;
-        if (taskName) {
-            const taskList = document.getElementById('task-list');
-            const taskItem = document.createElement('li');
-            taskItem.textContent = taskName;
-            taskList.appendChild(taskItem);
-            document.getElementById('task-form').reset();
-        }
-    });
-
-    // Placeholder function to update statistics
-    function updateStatistics() {
-        const statisticsContent = document.getElementById('statistics-content');
-        statisticsContent.innerHTML = 'Statistics will be displayed here.';
-    }
-
-    updateStatistics();
-</script>
 </body>
 </html>

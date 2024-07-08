@@ -42,6 +42,8 @@ public class SecurityConfig {
                         .requestMatchers("test/welcome").permitAll() //вход без авторизации
                         .requestMatchers("test/register").permitAll()
                         .requestMatchers("test/registration").permitAll()
+
+                        .requestMatchers("/test/addTask").authenticated()
                         .requestMatchers("test/**").authenticated()) //с авторизацией и аутентификацией
                 .formLogin(AbstractAuthenticationFilterConfigurer::permitAll)
                 .logout(logout -> logout
