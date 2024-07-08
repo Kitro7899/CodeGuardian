@@ -51,6 +51,7 @@
 </nav>
 
 <h1>Task List</h1>
+
 <div>
     <form action="/test/addTask" method="post">
         <input type="text" name="text" placeholder="Введите текст" />
@@ -67,5 +68,27 @@
         </form>
     </div>
 </div>
+
+<h1>Timer</h1>
+
+<div>
+    <form action="/test/setTimer" method="post">
+        <input type="number" name="year" placeholder="Год" min="0" />
+        <input type="number" name="month" placeholder="Месяц" min="0" />
+        <input type="number" name="week" placeholder="Неделя" min="0" />
+        <input type="number" name="day" placeholder="День" min="0" />
+        <input type="number" name="hour" placeholder="Час" min="0" />
+        <input type="number" name="minute" placeholder="Минута" min="0" />
+        <input type="number" name="second" placeholder="Секунда" min="0" />
+        <button type="submit">Установить таймер</button>
+    </form>
+</div>
+<div>
+    <form action="/test/stopTimer" method="post">
+        <button type="submit">Остановить таймер</button>
+    </form>
+</div>
+
+
 </body>
 </html>

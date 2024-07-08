@@ -37,7 +37,7 @@ public class TestController {
     @GetMapping("/users")
     @PreAuthorize("hasAuthority('ROLE_USER')")
     public String pageForUser(){
-        return "page2";
+        return "redirect:/test/tasks";
     }
 
     @GetMapping("/admins")
