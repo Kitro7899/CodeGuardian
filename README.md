@@ -61,7 +61,7 @@ spring.datasource.password=password  <------------(пароль)
 spring.jpa.hibernate.ddl-auto=update
 ```
 
-Приложение будет доступно по адресу http://localhost:8080.
+Приложение будет доступно по адресу http://localhost:8080/test/welcome.
 
 **Автор**
 Горностаев Владислав Иванович
