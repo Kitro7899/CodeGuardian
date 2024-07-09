@@ -7,6 +7,7 @@
     <style>
         body {
             font-family: Arial, sans-serif;
+            text-align: center;
             margin: 0;
             padding: 20px;
             background-color: #f5f5f5;
@@ -37,11 +38,19 @@
             justify-content: center;
             gap: 10px;
         }
+        input {
+            width: 50px;
+            text-align: center;
+        }
+        .timer-display {
+            font-size: 2em;
+            margin: 20px 0;
+        }
     </style>
 </head>
 <body>
 <header>
-    <h1>Web Assistant for Programmers</h1>
+    <h1>CodeGuardian</h1>
 </header>
 <p>Привет, <span th:text="${#authentication.name}">Имя пользователя</span>!</p>
 <nav>
@@ -59,7 +68,6 @@
 </div>
 <div th:each="task : ${tasks}">
     <div>
-        <d th:text="${task.id}"></d>
         <span th:text="${task.text}"></span>
         <form action="/test/deleteTask" method="post" style="display:inline;">
             <input type="hidden" name="id" th:value="${task.id}" />
@@ -67,5 +75,65 @@
         </form>
     </div>
 </div>
+
+<h1>Таймер</h1>
+<div>
+    <label>Дни: <input type="number" id="days" value="0"></label>
+    <label>Часы: <input type="number" id="hours" value="0"></label>
+    <label>Минуты: <input type="number" id="minutes" value="0"></label>
+    <label>Секунды: <input type="number" id="seconds" value="0"></label>
+</div>
+<div class="timer-display" id="timer-display">00:00:00:00</div>
+<div>
+    <button onclick="startTimer()">Установить таймер</button>
+    <button onclick="stopTimer()">Остановить</button>
+</div>
+
+<script>
+    let timerInterval;
+
+    async function startTimer() {
+        const days = parseInt(document.getElementById('days').value) || 0;
+        const hours = parseInt(document.getElementById('hours').value) || 0;
+        const minutes = parseInt(document.getElementById('minutes').value) || 0;
+        const seconds = parseInt(document.getElementById('seconds').value) || 0;
+
+        await fetch('/test/start?days=' + days + '&hours=' + hours + '&minutes=' + minutes + '&seconds=' + seconds, { method: 'POST' });
+
+        if (timerInterval) {
+            clearInterval(timerInterval);
+        }
+
+        timerInterval = setInterval(updateTimerDisplay, 1000);
+    }
+
+    async function stopTimer() {
+        await fetch('/test/stop', { method: 'POST' });
+        clearInterval(timerInterval);
+    }
+
+    async function updateTimerDisplay() {
+        const response = await fetch('/test/remaining');
+        const remainingTime = await response.text();
+
+        if (remainingTime <= 0) {
+            clearInterval(timerInterval);
+            document.getElementById('timer-display').innerHTML = '00:00:00:00';
+            return;
+        }
+
+        const days = Math.floor(remainingTime / (24 * 60 * 60));
+        const hours = Math.floor((remainingTime % (24 * 60 * 60)) / (60 * 60));
+        const minutes = Math.floor((remainingTime % (60 * 60)) / 60);
+        const seconds = remainingTime % 60;
+
+        document.getElementById('timer-display').innerHTML =
+            `${pad(days)}:${pad(hours)}:${pad(minutes)}:${pad(seconds)}`;
+    }
+
+    function pad(number) {
+        return number.toString().padStart(2, '0');
+    }
+</script>
 </body>
 </html>

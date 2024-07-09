@@ -24,10 +24,10 @@ public class MyUserDetailsService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Optional<User> user = userRepo.findByName(username);
 
-
         return user.map(MyUserDetails::new)
-                .orElseThrow(()->new UsernameNotFoundException(username+"There is not such user in REPO"));
+                .orElseThrow(() -> new UsernameNotFoundException(username + " There is no such user in REPO"));
     }
+
     public void registerNewUser(String username, String password, String email) {
         User newUser = new User();
         newUser.setName(username);

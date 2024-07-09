@@ -15,7 +15,9 @@ public class DataLoader implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
         if (taskRepo.count() == 0) {
-            taskRepo.save(new task("Пример задачи"));
+            System.out.println("taskRepo empty");
+        }else {
+            System.out.println("taskRepo is not empty");
         }
     }
 }
